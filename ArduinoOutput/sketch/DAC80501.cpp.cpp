@@ -1,3 +1,10 @@
+#include <Arduino.h>
+#line 8 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino"
+void setup();
+#line 17 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino"
+void loop();
+#line 0 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino"
+#line 1 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/DAC80501.cpp"
 /**************************************************************************/
 /*!
     @file     DAC80501.cpp
@@ -128,4 +135,25 @@ bool DAC80501::setVoltage(uint16_t output, bool writeEEPROM,
 
   i2c_dev->setSpeed(100000); // reset to arduino default
   return true;
+}
+
+#line 1 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino"
+//
+
+
+#include <Arduino.h>
+#include "DAC80501.h"
+
+
+void setup(){
+    DAC80501* testDAC= new DAC80501;
+    Serial.begin(115200);
+    Serial.println("INIT:--");
+    Serial.println(testDAC->begin());
+    Serial.println(testDAC->init());
+
+}
+
+void loop(){
+
 }

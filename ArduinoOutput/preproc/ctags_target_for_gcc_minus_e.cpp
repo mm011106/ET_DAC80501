@@ -1,3 +1,4 @@
+# 1 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/DAC80501.cpp"
 /**************************************************************************/
 /*!
     @file     DAC80501.cpp
@@ -10,7 +11,7 @@
 */
 /**************************************************************************/
 
-#include "DAC80501.h"
+# 14 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/DAC80501.cpp" 2
 
 
 
@@ -82,8 +83,8 @@ bool DAC80501::init(void) {
   }
 
   packet[0] = DAC80501_CMD::CMD_GAIN;
-  packet[1] = DAC80501_REF_DIV::REFDIV_1;     //REF divider = 1 
-  packet[2] = DAC80501_BUFF_GAIN::BUFGAIN_1;  // DAC Buffer gain =1 ,thus VFS=2.5V
+  packet[1] = DAC80501_REF_DIV::REFDIV_1; //REF divider = 1 
+  packet[2] = DAC80501_BUFF_GAIN::BUFGAIN_1; // DAC Buffer gain =1 ,thus VFS=2.5V
 
   if (!i2c_dev->write(packet, 3)) {
     return false;
@@ -119,8 +120,8 @@ bool DAC80501::setVoltage(uint16_t output, bool writeEEPROM,
 
 
   packet[0] = DAC80501_CMD::CMD_DAC;
-  packet[1] = output / 16;        // Upper data bits (D15.....D8)
-  packet[2] = (output % 16);      // Lower data bits (D7......D0)
+  packet[1] = output / 16; // Upper data bits (D15.....D8)
+  packet[2] = (output % 16); // Lower data bits (D7......D0)
 
   if (!i2c_dev->write(packet, 3)) {
     return false;
@@ -128,4 +129,24 @@ bool DAC80501::setVoltage(uint16_t output, bool writeEEPROM,
 
   i2c_dev->setSpeed(100000); // reset to arduino default
   return true;
+}
+# 1 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino"
+//
+
+
+# 5 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino" 2
+# 6 "/Users/masakazumiyamoto/Box/Arduino/Scripts/ET_DAC80501/main.ino" 2
+
+
+void setup(){
+    DAC80501* testDAC= new DAC80501;
+    Serial2.begin(115200);
+    Serial2.println("INIT:--");
+    Serial2.println(testDAC->begin());
+    Serial2.println(testDAC->init());
+
+}
+
+void loop(){
+
 }

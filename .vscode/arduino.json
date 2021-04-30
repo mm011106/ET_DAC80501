@@ -1,0 +1,7 @@
+{
+    "sketch": "main.ino",
+    "configuration": "pnum=NUCLEO_F303K8,upload_method=MassStorage,xserial=generic,usb=none,xusb=FS,opt=osstd,rtlib=nano",
+    "board": "STM32:stm32:Nucleo_32",
+    "output": "./ArduinoOutput",
+    "port": "/dev/tty.usbmodem1463203"
+}
