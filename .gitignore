@@ -31,7 +31,9 @@
 *.out
 *.app
 
-# Arduino
+# Arduino & VScode
 *.BUP*
 *.code-workspace
 *.bin
+/.vscode
+/ArduinoOutput
