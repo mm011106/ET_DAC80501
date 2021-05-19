@@ -178,7 +178,7 @@ bool DAC80501::setVoltage(const float output,
 
   uint8_t packet[3];
 
-  if ( output > 2.5 ){
+  if (  output < 0.0 || output > 2.5 ){
     return false;
   };
 
