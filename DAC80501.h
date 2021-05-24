@@ -17,15 +17,15 @@ constexpr uint8_t DAC80501_I2CADDR_DEFAULT=0x48; ///< Default i2c address
 // A0 pin = VDD (0x49)
 // A0 pin = SDA (0x4A)
 // A0 pin = SCL (0x4B)                                     
-constexpr uint8_t DAC80501_SOFT_RES=0xA; // Soft Reset code
 
 /**************************************************************************/
 /*!
-    @brief  Class for communicating with an MCP4725 DAC
+    @brief  Class for communicating with an DAC80501 DAC
 */
 /**************************************************************************/
 class DAC80501 {
 public:
+  //  command byte table:
   enum CMD{
   CMD_NOOP,     //0[W]
   CMD_DEVID,    //1[R] device identification : read resolution & Reset Setting
@@ -99,7 +99,7 @@ public:
 private:
   Adafruit_I2CDevice *i2c_dev = NULL;
   float DAC_VOLT2LSB = 0.0;
-
+  const uint8_t SOFT_RES=0xA; // Soft Reset code
 
 
 };

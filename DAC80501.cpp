@@ -40,6 +40,7 @@ bool DAC80501::begin(uint8_t i2c_address, TwoWire *wire) {
 
   return true;
 }
+
 /**************************************************************************/
 /*!
     @brief  Initialize DAC80501
@@ -54,7 +55,7 @@ bool DAC80501::init(void) {
 
   packet[0] = DAC80501::CMD::CMD_TRIGGER;
   packet[1] = 0x00;
-  packet[2] = DAC80501_SOFT_RES ; //RESET command
+  packet[2] = SOFT_RES ; //RESET command
   
   if (!i2c_dev->write(packet, 3)) {
     return false;
@@ -120,10 +121,10 @@ bool DAC80501::init(void) {
 /**************************************************************************/
 /*!
     @brief  Sets the output voltage to a fraction of source vref.  (Value
-            can be 0..4095)
+            can be 0..65535)
 
     @param[in]  output
-                The 12-bit value representing the relationship between
+                The 16-bit value representing the relationship between
                 the DAC's input voltage and its output voltage.
 
     @param i2c_frequency What we should set the I2C clock to when writing
@@ -146,32 +147,24 @@ bool DAC80501::setVoltage(const uint16_t output,
     return false;
   }
 
-  // Reading protocol:
-  //  Send a command byte for the register to be read.
-  // packet[0] = DAC80501_CMD::CMD_DAC;
-
-  // if (!i2c_dev->write(packet, 1)) {
-  //   return false;
-  // }
-
-  // //  Read 2byte of spacified resigter.
-  // if (!i2c_dev->read(packet,2,false)) {
-  //   return false;
-  // }
-
-  // packet[0] = DAC80501_CMD::CMD_TRIGGER;
-  // packet[1] = 0x00;
-  // packet[2] = 0x10;
-
-  // if (!i2c_dev->write(packet, 3)) {
-  //   return false;
-  // }
-
-
   i2c_dev->setSpeed(100000); // reset to arduino default
   return true;
 }
 
+
+
+/**************************************************************************/
+/*!
+    @brief  Sets the output voltage to a fraction of source vref.  (0 -- 2.5V)
+
+    @param[in]  output
+                absolute voltage [V] to be output. Assuming VFS=2.5V
+
+    @param i2c_frequency What we should set the I2C clock to when writing
+    to the DAC, defaults to 400 KHz
+    @returns True if able to write the value over I2C
+*/
+/**************************************************************************/
 bool DAC80501::setVoltage(const float output, 
                           const uint32_t i2c_frequency) {
   i2c_dev->setSpeed(i2c_frequency); // Set I2C frequency to desired speed
@@ -191,28 +184,6 @@ bool DAC80501::setVoltage(const float output,
   if (!i2c_dev->write(packet, 3)) {
     return false;
   }
-
-  // Reading protocol:
-  //  Send a command byte for the register to be read.
-  // packet[0] = DAC80501_CMD::CMD_DAC;
-
-  // if (!i2c_dev->write(packet, 1)) {
-  //   return false;
-  // }
-
-  // //  Read 2byte of spacified resigter.
-  // if (!i2c_dev->read(packet,2,false)) {
-  //   return false;
-  // }
-
-  // packet[0] = DAC80501_CMD::CMD_TRIGGER;
-  // packet[1] = 0x00;
-  // packet[2] = 0x10;
-
-  // if (!i2c_dev->write(packet, 3)) {
-  //   return false;
-  // }
-
 
   i2c_dev->setSpeed(100000); // reset to arduino default
   return true;
