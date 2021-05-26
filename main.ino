@@ -6,6 +6,13 @@
 
 DAC80501* testDAC= new DAC80501;
 
+float out_v[23]={
+    0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0,
+    10.0, 15.0, 20.0, 25.0, 
+    30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0 };
+
+const size_t n_out_v=sizeof(out_v)/sizeof(out_v[0]);
+
 void setup(){
     Serial.begin(115200);
     Serial.println("INIT:--");
@@ -24,9 +31,10 @@ void loop(){
     //     delay(100);
     // }
 
-    for (float v = 0.090; v < 1.1 ; v=v+0.01)
+    for (uint8_t i; i < n_out_v ; i++)
     {
-        testDAC->setVoltage(v);
+        testDAC->setVoltage((float)(out_v[i]/100.0+0.1-0.0021));
+        Serial.println(out_v[i]);
         delay(5000);
     }
     
